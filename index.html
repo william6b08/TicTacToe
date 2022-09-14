@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    function init(){
+      var grids = document.getElementsByTagName('div');
+      for (var x = 0; x < grids.length; x++){
+      grids[x].addEventListener('click', graphicModule.changeToCross)}
+      }
+    
+
+    var graphicModule = (function(){
+      var changeToCross = function(event){
+        var div = event.target;
+        div.classList.add("circle")
+      }
+      return {changeToCross}
+    })()
+
+    var gameLogicModule = function(){}
+
+    window.onload = init;
+  </script>
+  <title>Tic Tac Toe</title>
+</head>
+<body>
+  <div class="main-content">
+    <div id="gridnum1">1</div>
+    <div id="gridnum2">2</div>
+    <div id="gridnum3">3</div>
+    <div id="gridnum4">4</div>
+    <div id="gridnum5">5</div>
+    <div id="gridnum6">6</div>
+    <div id="gridnum7">7</div>
+    <div id="gridnum8">8</div>
+    <div id="gridnum9">9</div>
+  </div>
+</body>
+</html>

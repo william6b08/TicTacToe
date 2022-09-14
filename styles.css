@@ -1,0 +1,24 @@
+.main-content{
+  padding: 5px 0;
+  background-color: burlywood;
+  display: grid;
+  grid-template: repeat(3, 150px)/repeat(3, 150px);
+  gap: 5px;
+  justify-content: center;
+}
+
+.main-content > div{
+  background-color: azure;
+}
+
+.cross{
+  background-image: url('cross.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.circle{
+  background-image: url('circle.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
