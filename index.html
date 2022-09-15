@@ -14,15 +14,21 @@
       }
 
     var graphicModule = (function(){
-      var changeToCircle = function(event){
+      var changeToCircle = (event) =>{
         var div = event.target;
         div.classList.add("circle")
       }
-      return {changeToCircle}
+
+      var changeToCross = (event) =>{
+        var div = event.target;
+        div.classList.add("cross")
+      }
+      return {changeToCircle, changeToCross}
     })()
 
     var gameLogicModule = (function(){
       var gridsObjs = [];
+      var isCircle = true;
 
       const getGridPosition = (event) =>{
         var div = event.target;
@@ -32,15 +38,34 @@
 
       const gridCreator = () =>{
         state = "";
-        return{status};
+        return{state};
       }
 
       var changeGridState = (event) =>{
-        graphicModule.changeToCircle(event);
-        gridsObjs[getGridPosition(event)].state = "circle";
-        console.log(gridsObjs);
-      }
+        if (gridsObjs[getGridPosition(event)].state == ""){
+          if (isCircle){
+            graphicModule.changeToCircle(event);
+            gridsObjs[getGridPosition(event)].state = "o";
+            console.log(gridsObjs);
+            isCircle = !isCircle;
+          }
+          else{
+            graphicModule.changeToCross(event);
+            gridsObjs[getGridPosition(event)].state = "x";
+            console.log(gridsObjs);
+            isCircle = !isCircle;
+          }
+        }
 
+        else {return}
+      }
+      
+
+          // else{
+          //   graphicModule.changeToCross(event);
+          //   gridsObjs[getGridPosition(event)].state = "x";
+          //   console.log(gridsObjs);
+          // }
 
       return {gridsObjs, gridCreator, changeGridState}
     })()
