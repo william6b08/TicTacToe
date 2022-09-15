@@ -9,7 +9,7 @@
     function init(){
       var grids = document.querySelectorAll('.main-content > div');
       for (var x = 0; x < grids.length; x++){
-        gameLogicModule.gridsObjs.push(gameLogicModule.gridCreator())
+        gameLogicModule.gridsObjs.push(gameLogicModule.gridCreator(x+1))
         grids[x].addEventListener('click', gameLogicModule.changeGridState)}
       }
 
@@ -28,7 +28,7 @@
 
     var gameLogicModule = (function(){
       var gridsObjs = [];
-      var isCircle = true;
+      var _isCircle = true;
 
       const getGridPosition = (event) =>{
         var div = event.target;
@@ -36,37 +36,51 @@
         return position - 1;
       }
 
-      const gridCreator = () =>{
+      const gridCreator = (gridNumber) =>{
         state = "";
-        return{state};
+        return{state, gridNumber};
       }
 
       var changeGridState = (event) =>{
         if (gridsObjs[getGridPosition(event)].state == ""){
-          if (isCircle){
+          if (_isCircle){
             graphicModule.changeToCircle(event);
             gridsObjs[getGridPosition(event)].state = "o";
             console.log(gridsObjs);
-            isCircle = !isCircle;
+            _isCircle = !_isCircle;
           }
           else{
             graphicModule.changeToCross(event);
             gridsObjs[getGridPosition(event)].state = "x";
             console.log(gridsObjs);
-            isCircle = !isCircle;
+            checkResult.horizontalOne(getCrossResult(gridsObjs))
+            _isCircle = !_isCircle;
           }
         }
-
         else {return}
       }
-      
 
-          // else{
-          //   graphicModule.changeToCross(event);
-          //   gridsObjs[getGridPosition(event)].state = "x";
-          //   console.log(gridsObjs);
-          // }
-
+      const getCrossResult = (gridList) =>{
+        const result = gridList.filter((element)=>element.state === "x")
+        const finalResult = Array.from(result, (item)=>item.gridNumber)
+        return finalResult;
+      }
+// work progress!!
+      const checkResult = (() =>{
+        const horizontalOne = (result) =>{
+          const checkpointOne = [1,2,3]
+          let counter = 0;
+          for (checkpoint of checkpointOne){
+            if (result.includes(checkpoint)){
+              counter ++;
+            }
+          }
+          if (counter === 3){
+            console.log("You win")
+          }
+        }
+        return {horizontalOne}
+      })()
       return {gridsObjs, gridCreator, changeGridState}
     })()
 

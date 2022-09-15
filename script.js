@@ -1,15 +1,8 @@
-var grids = document.querySelectorAll('[class^="gridnum"]')
-
-for (grid of grids){
-  grid.addeventlistener('click', graphicModule.changeToCross)
-}
-var graphicModule = (function(){
-  var changeToCross = function(event){
-    var div = event.target;
-    div.classlist.add("circle")
-  }
-  return {changeToCross}
-})()
-var gameLogicModule = function(){}
+const Obj1 = {gender: "Male", name: "Ob1"}
+const Obj2 = {gender: "Male", name: "Ob2"}
+const Obj3 = {gender: "Male", name: "Ob3"}
+const Obj4 = {gender: "Male", name: "Ob4"}
+result = Array.from(Obj1, (Obj1)=>Obj1.gender)
+console.log(result)
 
 
