@@ -68,16 +68,19 @@
 // work progress!!
       const checkResult = (() =>{
         const horizontalOne = (result) =>{
-          const checkpointOne = [1,2,3]
-          let counter = 0;
-          for (checkpoint of checkpointOne){
-            if (result.includes(checkpoint)){
-              counter ++;
+          const horizontalCheckpoints = [[1,2,3],[4,5,6],[7,8,9]]
+          for (horizontalCheckpoint of horizontalCheckpoints){
+            let counter = 0;
+            for (checkpoint of horizontalCheckpoint){
+              if (result.includes(checkpoint)){
+                counter ++;
+              }
+            }
+            if (counter === 3){
+              console.log("You win")
             }
           }
-          if (counter === 3){
-            console.log("You win")
-          }
+          let counter = 0;
         }
         return {horizontalOne}
       })()
