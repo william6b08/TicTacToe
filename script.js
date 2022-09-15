@@ -1,4 +1,5 @@
 var grids = document.querySelectorAll('[class^="gridnum"]')
+
 for (grid of grids){
   grid.addeventlistener('click', graphicModule.changeToCross)
 }

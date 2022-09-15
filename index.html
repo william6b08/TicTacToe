@@ -7,21 +7,43 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     function init(){
-      var grids = document.getElementsByTagName('div');
+      var grids = document.querySelectorAll('.main-content > div');
       for (var x = 0; x < grids.length; x++){
-      grids[x].addEventListener('click', graphicModule.changeToCross)}
+        gameLogicModule.gridsObjs.push(gameLogicModule.gridCreator())
+        grids[x].addEventListener('click', gameLogicModule.changeGridState)}
       }
-    
 
     var graphicModule = (function(){
-      var changeToCross = function(event){
+      var changeToCircle = function(event){
         var div = event.target;
         div.classList.add("circle")
       }
-      return {changeToCross}
+      return {changeToCircle}
     })()
 
-    var gameLogicModule = function(){}
+    var gameLogicModule = (function(){
+      var gridsObjs = [];
+
+      const getGridPosition = (event) =>{
+        var div = event.target;
+        const position = parseInt(div.id.slice(-1));
+        return position - 1;
+      }
+
+      const gridCreator = () =>{
+        state = "";
+        return{status};
+      }
+
+      var changeGridState = (event) =>{
+        graphicModule.changeToCircle(event);
+        gridsObjs[getGridPosition(event)].state = "circle";
+        console.log(gridsObjs);
+      }
+
+
+      return {gridsObjs, gridCreator, changeGridState}
+    })()
 
     window.onload = init;
   </script>
