@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     function init(){
+      var announcement = document.getElementById('announcement');
       var grids = document.querySelectorAll('.main-content > div');
       var restartBtn = document.getElementById('restart');
       for (var x = 0; x < grids.length; x++){
@@ -97,7 +98,7 @@
               }
             }
             if (counter === 3){
-              console.log(`${playerName} has won.`)
+              announcement.innerText= `${playerName} has won.`;
               graphicModule.changeGridColor(checkPoint)
               gameController.disableClick();
             }
@@ -123,6 +124,7 @@
           grids[x].addEventListener('click', gameLogicModule.changeGridState)
         }
         gameLogicModule.gridCreator(9);
+        gameLogicModule._isCircle = true;
       }
       return {disableClick, restart};
   })()
@@ -133,6 +135,7 @@
 </head>
 <body>
   <button id="restart">restart</button>
+  <p id="announcement"></p>
   <div class="main-content">
     <div id="gridnum1">1</div>
     <div id="gridnum2">2</div>

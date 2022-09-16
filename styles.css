@@ -31,3 +31,12 @@ button{
 .green{
   background-color: green;
 }
+
+#announcement{
+  position: absolute;
+  left: 50px;
+  top: 100px;
+  width: fit-content;
+  font-size: 2rem;
+  background-color: beige;
+}
