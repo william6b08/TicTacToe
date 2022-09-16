@@ -8,22 +8,33 @@
   <script>
     function init(){
       var grids = document.querySelectorAll('.main-content > div');
+      var restartBtn = document.getElementById('restart');
       for (var x = 0; x < grids.length; x++){
-        gameLogicModule.gridsObjs.push(gameLogicModule.gridCreator(x+1))
         grids[x].addEventListener('click', gameLogicModule.changeGridState)}
-      }
+      gameLogicModule.gridCreator(9);
+      
+      restartBtn.addEventListener('click', gameController.restart);
+      
+    }
 
-    var graphicModule = (function(){
-      var changeToCircle = (event) =>{
-        var div = event.target;
+    const graphicModule = (function(){
+      const changeToCircle = (event) =>{
+        const div = event.target;
         div.classList.add("circle")
       }
 
-      var changeToCross = (event) =>{
-        var div = event.target;
+      const changeToCross = (event) =>{
+        const div = event.target;
         div.classList.add("cross")
       }
-      return {changeToCircle, changeToCross}
+
+      const changeGridColor = (gridList) =>{
+        for(grid of gridList){
+          const gridDiv = document.getElementById("gridnum"+grid);
+          gridDiv.style.backgroundColor = 'green'
+        }
+      }
+      return {changeToCircle, changeToCross, changeGridColor}
     })()
 
     var gameLogicModule = (function(){
@@ -37,8 +48,9 @@
       }
 
       const gridCreator = (gridNumber) =>{
-        state = "";
-        return{state, gridNumber};
+        for (var x = 0; x < gridNumber; x++){
+          gridsObjs[x] = {state:"", gridNumber: x+1}
+        }
       }
 
       var changeGridState = (event) =>{
@@ -47,51 +59,80 @@
             graphicModule.changeToCircle(event);
             gridsObjs[getGridPosition(event)].state = "o";
             console.log(gridsObjs);
+            result = getResult(gridsObjs, "o");
+            checkResult.check(result, "o")
             _isCircle = !_isCircle;
           }
           else{
             graphicModule.changeToCross(event);
             gridsObjs[getGridPosition(event)].state = "x";
             console.log(gridsObjs);
-            checkResult.horizontalOne(getCrossResult(gridsObjs))
+            result = getResult(gridsObjs, "x");
+            checkResult.check(result, "x")
             _isCircle = !_isCircle;
           }
         }
         else {return}
       }
 
-      const getCrossResult = (gridList) =>{
-        const result = gridList.filter((element)=>element.state === "x")
+      const getResult = (gridList, icon) =>{
+        const result = gridList.filter((element)=>element.state === icon)
         const finalResult = Array.from(result, (item)=>item.gridNumber)
         return finalResult;
       }
-// work progress!!
+
+// Check logic
       const checkResult = (() =>{
-        const horizontalOne = (result) =>{
-          const horizontalCheckpoints = [[1,2,3],[4,5,6],[7,8,9]]
-          for (horizontalCheckpoint of horizontalCheckpoints){
+        const check = (result, playerName) =>{
+          const checkPoints = [
+          [1,2,3],[4,5,6],[7,8,9],
+          [1,4,7],[2,5,8],[3,6,9],
+          [1,5,9],[3,5,7]
+        ]
+          for (checkPoint of checkPoints){
             let counter = 0;
-            for (checkpoint of horizontalCheckpoint){
-              if (result.includes(checkpoint)){
+            for (gridNum of checkPoint){
+              if (result.includes(gridNum)){
                 counter ++;
               }
             }
             if (counter === 3){
-              console.log("You win")
+              console.log(`${playerName} has won.`)
+              graphicModule.changeGridColor(checkPoint)
+              gameController.disableClick();
             }
           }
-          let counter = 0;
         }
-        return {horizontalOne}
+        return {check}
       })()
       return {gridsObjs, gridCreator, changeGridState}
     })()
+
+    const gameController = (()=>{
+      const disableClick = () =>{
+        var grids = document.querySelectorAll('.main-content > div');
+        for (var x = 0; x < grids.length; x++){
+          grids[x].removeEventListener('click', gameLogicModule.changeGridState)}
+      }
+
+      const restart = () =>{
+        var grids = document.querySelectorAll('.main-content > div');
+        for (var x = 0; x < grids.length; x++){
+          grids[x].style.backgroundColor = 'azure';
+          grids[x].classList.remove("cross", 'circle')
+          grids[x].addEventListener('click', gameLogicModule.changeGridState)
+        }
+        gameLogicModule.gridCreator(9);
+      }
+      return {disableClick, restart};
+  })()
 
     window.onload = init;
   </script>
   <title>Tic Tac Toe</title>
 </head>
 <body>
+  <button id="restart">restart</button>
   <div class="main-content">
     <div id="gridnum1">1</div>
     <div id="gridnum2">2</div>

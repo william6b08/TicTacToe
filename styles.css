@@ -1,3 +1,8 @@
+button{
+  position: absolute;
+  left: 50px;
+  top: 50px;
+}
 .main-content{
   padding: 5px 0;
   background-color: burlywood;
@@ -21,4 +26,8 @@
   background-image: url('circle.png');
   background-size: 100%;
   background-repeat: no-repeat;
+}
+
+.green{
+  background-color: green;
 }
